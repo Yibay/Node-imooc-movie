@@ -1,17 +1,19 @@
 //载入mongodb 操作模型
 var User = require('../models/user');
 
-// signup
+// signup Page
 exports.showSignup = function(req, res){
 	res.render('signup',{
 		title: '注册页面'
 	});
 };
+// signin Page
 exports.showSignin = function(req, res){
 	res.render('signin',{
 		title: '登录页面'
 	});
 };
+// signup
 exports.signup = function(req, res){
 	var _user = req.body.user;
 	User.find({name: _user.name},function(err, user){
@@ -69,7 +71,7 @@ exports.logout = function(req, res){
 	res.redirect('/');
 };
 
-// userlist page
+// userlist Page
 exports.list = function(req, res){
 	User.fetch(function(err, users){
 		if(err){
@@ -81,3 +83,20 @@ exports.list = function(req, res){
 		});
 	});
 };
+
+// midware check signin
+exports.signinRequired = function(req, res, next){
+	var user = req.session.user;
+	if(!user){
+		res.redirect('/signin');
+	}
+	next();
+}
+// mideware check admin
+exports.adminRequired = function(req, res, next){
+	var user = req.session.user;
+	if(!user.role || user.role <= 10){
+		res.redirect('/signin');
+	}
+	next();
+}
