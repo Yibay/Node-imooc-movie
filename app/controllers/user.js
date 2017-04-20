@@ -30,7 +30,7 @@ exports.signup = function(req, res){
 				if(err){
 					console.log(err);
 				}
-				console.log(user);
+				console.log(user); 
 				res.redirect('/');
 			});
 		}

@@ -1,5 +1,6 @@
 //载入mongodb 操作模型
 var Movie = require('../models/movie');
+var Comment = require('../models/comment');
 var _ = require('underscore');
 
 // detail page
@@ -10,9 +11,26 @@ exports.detail = function(req, res){
 		if(err){
 			console.log(err);
 		}
-		res.render('detail',{
-			title: 'imooc ' + movie.title,
-			movie: movie
+		Comment
+			.find({movie: id})
+			//0. populate 关联替换
+			//1. populate, 将 comment实例的from属性，变成一个对象。
+			//2. from对象中_id：原来from的ObjectId，
+			//3. 同时给from对象增加一个name属性 为通过ObjectId 找到对应的User表中的user的name属性值
+			.populate('from','name')
+			.populate('reply.from reply.to','name')
+			//exex(func) 获取前面结果，执行的回调函数
+			.exec(function(err, comments){
+			if(err){
+				console.log(err);
+			}
+			console.log('comments:');
+			console.log(comments[0].reply);
+			res.render('detail',{
+				title: 'imooc ' + movie.title,
+				movie: movie,
+				comments: comments
+			});
 		});
 	});
 };
