@@ -1,21 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+//获取到mongoodb collection 中 唯一标示 ObjectId类型
 var ObjectId = Schema.Types.ObjectId;
 
 //构建模式
-var MovieSchema = new Schema({
-	doctor: String,
-	title: String,
-	language: String,
-	country: String,
-	summary: String,
-	flash: String,
-	poster: String,
-	year: Number,
-	category: {
-		type: ObjectId,
-		ref: 'Category'
-	},
+var CategorySchema = new mongoose.Schema({
+	name: String,
+	movies: [
+		{
+			type: ObjectId,
+			ref: 'Movie'
+		}
+	],
 	meta: {
 		createAt: {
 			type: Date,
@@ -29,7 +25,7 @@ var MovieSchema = new Schema({
 });
 
 //每次存储数据前，调用的方法
-MovieSchema.pre('save', function(next){
+CategorySchema.pre('save', function(next){
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	}
@@ -40,7 +36,7 @@ MovieSchema.pre('save', function(next){
 });
 
 //静态方法
-MovieSchema.statics = {
+CategorySchema.statics = {
 	fetch: function(cb){
 		return this
 			.find({})
@@ -54,4 +50,4 @@ MovieSchema.statics = {
 }
 
 //导出整个模块
-module.exports = MovieSchema;
+module.exports = CategorySchema;

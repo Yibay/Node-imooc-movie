@@ -3,6 +3,7 @@ var Index = require('../app/controllers/index');
 var Movie = require('../app/controllers/movie');
 var User = require('../app/controllers/user');
 var Comment = require('../app/controllers/comment');
+var Category = require('../app/controllers/category');
 	//underscore extend方法 将 第2参数中值变动的属性，替换第1参数中属性值
 var _ = require('underscore');
 
@@ -39,5 +40,11 @@ module.exports = function(app){
 
 	// Comment
 	app.post('/user/comment', User.signinRequired, Comment.save);
+
+	// Category
+	app.get('/admin/category/new', User.signinRequired, User.adminRequired, Category.new);
+	app.post('/admin/category', User.signinRequired, User.adminRequired, Category.save);
+	app.get('/admin/category/update/:id', User.signinRequired, User.adminRequired, Category.update);
+	app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list);
 
 }

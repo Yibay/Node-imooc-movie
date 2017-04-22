@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
 //构建模式
-var CommentSchema = new  Schema({
+var CommentSchema = new Schema({
 	movie: {
 		type: ObjectId,
 		ref: 'Movie'
