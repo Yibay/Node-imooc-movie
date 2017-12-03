@@ -125,10 +125,7 @@ exports.save = function(req, res){
 				if(err){
 					console.log(err);
 				}
-				console.log("save movie: " + movie);
-				console.log("save category: " + movie.category);
 				Category.findOne({_id: movie.category},function(err, category){
-					console.log("find: " + movie.category);
 					category.movies.push(movie._id);
 					category.save(function(err, category){
 						if(err){
@@ -158,10 +155,7 @@ exports.save = function(req, res){
 						if(err){
 							console.log(err);
 						}
-						console.log("save movie: " + movie);
-						console.log("save category: " + movie.category);
 						Category.findOne({_id: movie.category},function(err, category){
-							console.log("find: " + movie.category);
 							category.movies.push(movie._id);
 							category.save(function(err, category){
 								if(err){

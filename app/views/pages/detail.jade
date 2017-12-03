@@ -14,7 +14,7 @@ block content
 							each item in comments
 								li.media
 									.pull-left
-										//-主评论中的头像，通过.comment类 绑定定向回复事件
+										//- 主评论中的头像，通过.comment类 绑定定向回复事件
 										a.comment(href="#comments",data-cid="#{item._id}",data-tid="#{item.from._id}")
 											img.media-object(src="",style="width:64px;height:64px;")
 									.media-body

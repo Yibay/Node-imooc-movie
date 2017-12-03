@@ -47,4 +47,7 @@ module.exports = function(app){
 	app.get('/admin/category/update/:id', User.signinRequired, User.adminRequired, Category.update);
 	app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list);
 
+	// results
+	app.get('/results', Index.search);
+
 }
